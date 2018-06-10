@@ -23,8 +23,28 @@ document.getElementById('current-0').textContent = '0';
 document.getElementById('score-1').textContent = '0';
 document.getElementById('current-1').textContent = '0';
 
+ function nextPlayer(){
+    // Next Players turn
+    activePlayer === 0 ? activePlayer = 1 :  activePlayer = 0;
+    roundScores = 0;
 
-document.querySelector('.btn-roll').addEventListener('click', function (btn) {
+    document.getElementById('current-0').textContent = '0';
+    document.getElementById('current-1').textContent = '0';
+
+    document.querySelector('.player-0-panel').classList.toggle('active');
+    document.querySelector('.player-1-panel').classList.toggle('active');
+
+    document.querySelector('.dice').style.display = 'none';
+
+    //document.querySelector('.player-0-panel').classList.remove('active');
+    //document.querySelector('.player-1-panel').classList.add('active');
+
+};
+
+
+
+// Button Roll Function
+document.querySelector('.btn-roll').addEventListener('click', function () {
     // 1. random number
     let dice = Math.floor(Math.random() * 6) + 1;
 
@@ -34,8 +54,41 @@ document.querySelector('.btn-roll').addEventListener('click', function (btn) {
     diceDom.src = 'dice-' + dice + '.png';
 
     // 3. update the rolled number if the score is not 1
-    if (dice > 1){
+    if (dice !== 1){
         //Add score
+        roundScores += dice;
+        document.querySelector("#current-" + activePlayer).textContent = roundScores;
+
+
+    }else {
+        nextPlayer();
 
     }
+
+});
+
+// Hold Button Function
+document.querySelector('.btn-hold').addEventListener('click', function () {
+
+    // Add current score to global score
+    scores[activePlayer] += roundScores;
+
+    // Update the UI
+    document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+
+    // Check if player won
+    if (scores[activePlayer] >= 10){
+        document.querySelector('#name-' + activePlayer).textContent = 'Winner';
+        document.querySelector('.dice').style.display = 'none';
+        document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+        document.querySelector('.btn-roll').style.display = 'none';
+        document.querySelector('.btn-hold').style.display = 'none';
+    }else {
+        //Next Player
+        nextPlayer();
+    }
+
+
+
 });
