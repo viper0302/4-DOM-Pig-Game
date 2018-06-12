@@ -152,3 +152,25 @@ i {
 
 .winner { background-color: #f7f7f7; }
 .winner .player-name { font-weight: 300; color: #EB4D4D; }
+
+.scores-input{
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    top: 520px;
+    text-align: center;
+    color: #555;
+    font-family: Lato;
+    padding: 10px;
+    width: 160px;
+    text-transform: uppercase;
+
+
+}
+.scores-input:focus{
+    outline: none;
+}
+#dice-1{
+    top: 120px;}
+#dice-2{
+    top: 250px;}
